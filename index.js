@@ -19,9 +19,15 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// var ip = req.headers['x-real-ip']; undefined
+// var ip2 = req.headers['x-client-ip']; undefined
+// var ip3 = req.headers['x-forwarded-for']; undefined
+
 // your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+app.get('/api/whoami', function (req, res) {
+var myIp = req.ip;
+console.log(JSON.stringify(req.header));
+res.send(myIp);
 });
 
 // listen for requests :)
