@@ -18,6 +18,9 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
+//var myIp = req.ip;
+//res.send(myIp); gives 127... on render
+//console.log(JSON.stringify(req.header));
 
 // var ip = req.headers['x-real-ip']; undefined
 // var ip2 = req.headers['x-client-ip']; undefined
@@ -25,9 +28,23 @@ app.get('/', function (req, res) {
 
 // your first API endpoint...
 app.get('/api/whoami', function (req, res) {
-var myIp = req.ip;
-console.log(JSON.stringify(req.header));
-res.send(myIp);
+
+// var language = req.headers['accept-language'];
+// var agent = req.headers['user-agent'];
+
+// res.json({language: language, software: agent}); gets language and software as excepted
+
+
+//var myIp = req.ip;
+//res.send(myIp); gives 127... on render
+
+var ip = req.headers['x-real-ip']; 
+var ip2 = req.headers['x-client-ip']; 
+var ip3 = req.headers['x-forwarded-for']; 
+var ips = req.ips;
+
+res.json({ip: ip, ip2: ip2, ip3: ip3, ips: ips})
+
 });
 
 // listen for requests :)
