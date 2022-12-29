@@ -18,8 +18,6 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-//var myIp = req.ip;
-//res.send(myIp); gives 127... on render
 //console.log(JSON.stringify(req.header));
 
 // var ip = req.headers['x-real-ip']; undefined
@@ -29,23 +27,15 @@ app.get('/', function (req, res) {
 // your first API endpoint...
 app.get('/api/whoami', function (req, res) {
 
-// var language = req.headers['accept-language'];
-// var agent = req.headers['user-agent'];
-
-// res.json({language: language, software: agent}); gets language and software as excepted
-
-
 //var myIp = req.ip;
 //res.send(myIp); gives 127... on render
+// var ip3 = req.headers['x-forwarded-for'].split(",")[0]; 
 
-//var ip = req.headers['x-real-ip']; 
-//var ip2 = req.headers['x-client-ip']; 
-var ip3 = req.headers['x-forwarded-for'].split(",")[0]; 
-var ipOrig = req.headers['x-original-forwarded-for'];
-var cfConnecting = req.headers['cf-connecting-ip'];
-//var ips = req.ips;
+var cfConnecting = req.headers['cf-connecting-ip']; // works as is behind nginx proxy(?)
+var language = req.headers['accept-language'];
+var agent = req.headers['user-agent'];
 
-res.json({ ip3: ip3, ipOrig: ipOrig, cfConnecting: cfConnecting })
+res.json({ipaddress: cfConnecting, language: language, software: agent })
 
 });
 
