@@ -38,12 +38,14 @@ app.get('/api/whoami', function (req, res) {
 //var myIp = req.ip;
 //res.send(myIp); gives 127... on render
 
-var ip = req.headers['x-real-ip']; 
-var ip2 = req.headers['x-client-ip']; 
-var ip3 = req.headers['x-forwarded-for']; 
-var ips = req.ips;
+//var ip = req.headers['x-real-ip']; 
+//var ip2 = req.headers['x-client-ip']; 
+var ip3 = req.headers['x-forwarded-for'].split(",")[0]; 
+var ipOrig = req.headers['x-original-forwarded-for'];
+var cfConnecting = req.headers['cf-connecting-ip'];
+//var ips = req.ips;
 
-res.json({ip: ip, ip2: ip2, ip3: ip3, ips: ips})
+res.json({ ip3: ip3, ipOrig: ipOrig, cfConnecting: cfConnecting })
 
 });
 
